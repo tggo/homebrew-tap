@@ -58,7 +58,10 @@ class WhisperIhm < Formula
     ENV["CGO_LDFLAGS"] = ldflags
     ENV["CGO_ENABLED"] = "1"
 
-    system "go", "build", "-trimpath", "-o", bin/"whisper-ihm", "."
+    model_path = "#{var}/whisper-ihm/ggml-large-v3.bin"
+    system "go", "build", "-trimpath",
+           "-ldflags", "-X main.defaultModelPath=#{model_path}",
+           "-o", bin/"whisper-ihm", "."
 
     # Install ten_vad framework for runtime
     frameworks.install "ten-vad/lib/macOS/ten_vad.framework"
