@@ -1,9 +1,14 @@
 class WhisperIhm < Formula
   desc "Offline speech-to-text transcription for long audio files"
   homepage "https://github.com/tggo/whisper.ihm"
-  url "https://github.com/tggo/whisper.ihm/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "fed4595c1a362c02e3d79d65cee29eacc2d860d3bb9e9f98ab3b29af572f59aa"
+  url "https://github.com/tggo/whisper.ihm/archive/refs/tags/v0.1.1.tar.gz"
+  sha256 ""
   license "MIT"
+
+  bottle do
+    root_url "https://github.com/tggo/whisper.ihm/releases/download/v0.1.1"
+    sha256 cellar: :any, arm64_sonoma: "0e2c55bae77d2a678f2303a857d6a50d7fcd22746d636819883663de26b6432c"
+  end
 
   depends_on "cmake" => :build
   depends_on "go" => :build
