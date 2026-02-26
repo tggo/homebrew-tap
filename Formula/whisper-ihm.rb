@@ -44,7 +44,8 @@ class WhisperIhm < Formula
     ].join(":")
     ldflags = "-lwhisper -lggml -lggml-base -lggml-cpu -lggml-blas -lggml-metal " \
               "-lm -lstdc++ -framework Accelerate -framework Metal " \
-              "-framework Foundation -framework CoreGraphics"
+              "-framework Foundation -framework CoreGraphics " \
+              "-Wl,-rpath,#{frameworks}"
 
     ENV["C_INCLUDE_PATH"] = whisper_inc
     ENV["LIBRARY_PATH"] = whisper_lib
@@ -52,6 +53,9 @@ class WhisperIhm < Formula
     ENV["CGO_ENABLED"] = "1"
 
     system "go", "build", "-trimpath", "-o", bin/"whisper-ihm", "."
+
+    # Install ten_vad framework for runtime
+    frameworks.install "ten-vad/lib/macOS/ten_vad.framework"
   end
 
   def caveats
