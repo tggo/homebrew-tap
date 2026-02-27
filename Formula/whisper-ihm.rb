@@ -1,14 +1,15 @@
 class WhisperIhm < Formula
   desc "Offline speech-to-text transcription for long audio files"
   homepage "https://github.com/tggo/whisper.ihm"
-  url "https://github.com/tggo/whisper.ihm/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "5ba66082e8af6ef9272d71624fbea45f3eb7b01afbf1b7fab6a238eb57fd7983"
+  url "https://github.com/tggo/whisper.ihm/archive/refs/tags/v0.3.0.tar.gz"
+  sha256 "1c0538fe080560e6c7b37759138fff74caac65e951b581085e519e8881a671f6"
   license "MIT"
 
   bottle do
-    root_url "https://github.com/tggo/whisper.ihm/releases/download/v0.2.0"
-    sha256 cellar: :any, arm64_sonoma: "0bf38a4ebaee53ad08758f39a082347e9bd1e12ba76481eaa8bac0b359b8c3b4"
+    root_url "https://github.com/tggo/whisper.ihm/releases/download/v0.3.0"
+    sha256 cellar: :any, arm64_sonoma: "a0484adaa0cace6c1fc57b51a13904455b7851edada3433f0fa37669fe016e82"
   end
+
 
 
 
@@ -33,6 +34,11 @@ class WhisperIhm < Formula
   def install
     resource("whisper.cpp").stage(buildpath/"whisper.cpp")
     resource("ten-vad").stage(buildpath/"ten-vad")
+
+    # Apply whisper.cpp patches
+    Dir.glob("patches/*.patch").each do |p|
+      system "git", "-C", "whisper.cpp", "apply", "../" + p
+    end
 
     # Build whisper.cpp
     system "cmake", "-S", "whisper.cpp", "-B", "whisper.cpp/build",
@@ -61,7 +67,7 @@ class WhisperIhm < Formula
     ENV["CGO_LDFLAGS"] = ldflags
     ENV["CGO_ENABLED"] = "1"
 
-    model_path = "#{var}/whisper-ihm/ggml-large-v3.bin"
+    model_path = "#{var}/whisper-ihm/ggml-large-v3-turbo.bin"
     system "go", "build", "-trimpath",
            "-ldflags", "-X main.defaultModelPath=#{model_path}",
            "-o", bin/"whisper-ihm", "."
@@ -74,11 +80,11 @@ class WhisperIhm < Formula
     <<~EOS
       You need a whisper model to transcribe audio. Download one with:
         mkdir -p #{var}/whisper-ihm
-        curl -L -o #{var}/whisper-ihm/ggml-large-v3.bin \\
-          https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3.bin
+        curl -L -o #{var}/whisper-ihm/ggml-large-v3-turbo.bin \\
+          https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo.bin
 
       Then run:
-        whisper-ihm -model #{var}/whisper-ihm/ggml-large-v3.bin recording.mp3
+        whisper-ihm -model #{var}/whisper-ihm/ggml-large-v3-turbo.bin recording.mp3
     EOS
   end
 
