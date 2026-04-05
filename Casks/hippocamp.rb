@@ -5,22 +5,22 @@ cask "hippocamp" do
   on_macos do
     on_intel do
       url "https://github.com/tggo/hippocamp/releases/download/v#{version}/hippocamp_darwin_amd64.tar.gz"
-      sha256 "2d263992ebb9bf9233f8fc44b7493ccc763303a0a7b0df2c67e3cdf914732fef"
+      sha256 "68fe425965499b5b3842a791e7bdf3e9027b3a1efb49fc24a2c474a0bf8d4c46"
     end
     on_arm do
       url "https://github.com/tggo/hippocamp/releases/download/v#{version}/hippocamp_darwin_arm64.tar.gz"
-      sha256 "a3bec6a81c3aa843b4e827d64f7ce0909edf478c83e5bbd3f24e89d3b10648a1"
+      sha256 "8987965665e7361e1a69b3f417b33dbbefacce41cdce96e9a2e98c95953d5473"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/tggo/hippocamp/releases/download/v#{version}/hippocamp_linux_amd64.tar.gz"
-      sha256 "42e906db7d3c3f1852d2b466fb838b0b44a6c59ea11dc63af1bc00b87f1465e6"
+      sha256 "56353f6d2b2f312df628e37f8b69a002772e371226b1af73c004df33b2dafda4"
     end
     on_arm do
       url "https://github.com/tggo/hippocamp/releases/download/v#{version}/hippocamp_linux_arm64.tar.gz"
-      sha256 "f3668351d8942b88358b4f57013602f7a4980054180463cc439229918b844a01"
+      sha256 "dad5206f12e06f9876c7dbfcf57a6d3c51bbe477934d012ddbe228c6684146d8"
     end
   end
 
